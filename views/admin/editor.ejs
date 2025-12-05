@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post ? 'Edit Post' : 'New Post' %> | Anthropic Admin</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+</head>
+<body style="background: var(--background-light);">
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <a href="/admin" class="admin-logo">
+        <img src="/images/logo.png" alt="Anthropic" height="24" style="margin-right: 8px;">
+        Admin
+      </a>
+      <nav class="admin-nav">
+        <a href="/">View Site</a>
+        <a href="/admin">Dashboard</a>
+        <a href="/admin/posts/new">New Post</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Editor Content -->
+  <main class="admin-container">
+    <h1 class="admin-title"><%= post ? 'Edit Post' : 'Create New Post' %></h1>
+
+    <form id="post-form" class="editor-form">
+      <div class="form-group">
+        <label for="title" class="form-label">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-input"
+          placeholder="Enter post title..."
+          value="<%= post ? post.title : '' %>"
+          required
+        >
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="slug" class="form-label">Slug</label>
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            class="form-input"
+            placeholder="post-url-slug"
+            value="<%= post ? post.slug : '' %>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="category" class="form-label">Category</label>
+          <select id="category" name="category" class="form-select">
+            <option value="News" <%= post && post.category === 'News' ? 'selected' : '' %>>News</option>
+            <option value="Research" <%= post && post.category === 'Research' ? 'selected' : '' %>>Research</option>
+            <option value="Product" <%= post && post.category === 'Product' ? 'selected' : '' %>>Product</option>
+            <option value="Safety" <%= post && post.category === 'Safety' ? 'selected' : '' %>>Safety</option>
+            <option value="Company" <%= post && post.category === 'Company' ? 'selected' : '' %>>Company</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="excerpt" class="form-label">Excerpt</label>
+        <input
+          type="text"
+          id="excerpt"
+          name="excerpt"
+          class="form-input"
+          placeholder="Brief description for previews..."
+          value="<%= post ? post.excerpt : '' %>"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="content" class="form-label">Content (HTML)</label>
+        <textarea
+          id="content"
+          name="content"
+          class="form-textarea"
+          placeholder="<p>Write your post content here...</p>"
+          required
+        ><%= post ? post.content : '' %></textarea>
+        <small style="color: var(--text-muted); margin-top: 0.5rem; display: block;">
+          Supports HTML tags like &lt;p&gt;, &lt;h2&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;a href=""&gt;
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input
+            type="checkbox"
+            id="published"
+            name="published"
+            <%= post && post.published ? 'checked' : '' %>
+          >
+          <span>Publish this post</span>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          <%= post ? 'Update Post' : 'Create Post' %>
+        </button>
+        <a href="/admin" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script>
+    const postId = <%= post ? post.id : 'null' %>;
+    const isEditing = postId !== null;
+
+    // Auto-generate slug from title
+    const titleInput = document.getElementById('title');
+    const slugInput = document.getElementById('slug');
+
+    titleInput.addEventListener('input', function() {
+      if (!isEditing || slugInput.value === '') {
+        slugInput.value = generateSlug(this.value);
+      }
+    });
+
+    // Form submission
+    document.getElementById('post-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = {
+        title: document.getElementById('title').value.trim(),
+        slug: document.getElementById('slug').value.trim(),
+        excerpt: document.getElementById('excerpt').value.trim(),
+        content: document.getElementById('content').value.trim(),
+        category: document.getElementById('category').value,
+        published: document.getElementById('published').checked
+      };
+
+      // Validate
+      if (!formData.title) {
+        showToast('Title is required', 'error');
+        return;
+      }
+      if (!formData.slug) {
+        showToast('Slug is required', 'error');
+        return;
+      }
+      if (!formData.content) {
+        showToast('Content is required', 'error');
+        return;
+      }
+
+      try {
+        const url = isEditing ? `/api/posts/${postId}` : '/api/posts';
+        const method = isEditing ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showToast(isEditing ? 'Post updated!' : 'Post created!', 'success');
+          setTimeout(() => {
+            window.location.href = '/admin';
+          }, 1000);
+        } else {
+          throw new Error(data.error);
+        }
+      } catch (error) {
+        showToast('Error: ' + error.message, 'error');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build output
+dist/
+build/
+
+# Java / Maven
+backend/target/
+*.class
+*.jar
+*.war
+
+# Maven wrapper (optional - remove if you want to commit it)
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+
+# Temporary files
+tmp/
+temp/
+*.tmp
