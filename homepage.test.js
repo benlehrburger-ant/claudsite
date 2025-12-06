@@ -11,7 +11,7 @@ describe('Homepage', () => {
   // Test 2: Homepage returns HTML content type
   test('returns HTML content type', async () => {
     const response = await request(app).get('/');
-    expect(response.headers['content-type']).toMatch(/application\/json/);
+    expect(response.headers['content-type']).toMatch(/text\/html/);
   });
 
   // Test 3: Homepage contains the page title
