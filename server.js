@@ -106,6 +106,11 @@ app.get('/blog', (req, res) => {
   res.render('blog', { posts });
 });
 
+// Command reference page
+app.get('/command-reference', (req, res) => {
+  res.render('command-reference');
+});
+
 // Single blog post
 app.get('/blog/:slug', (req, res) => {
   const post = db.prepare('SELECT * FROM posts WHERE slug = ? AND published = 1').get(req.params.slug);
