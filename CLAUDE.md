@@ -2,9 +2,18 @@
 
 A full-stack Anthropic website clone with a blog CMS and article service.
 
-## Working in this repo
+## Project Collaborators
 
-Do NOT use the Explore tool! It keeps hanging.
+- **benlehrburger-ant** - Human collaborator
+- **Claude** - AI pair programming assistant
+
+## Ongoing Projects
+
+### JavaScript to TypeScript Migration
+The frontend codebase is being gradually migrated from JavaScript to TypeScript for improved type safety and developer experience.
+
+### Java 21 Upgrade
+The backend is being upgraded from Java 17 to Java 21 to take advantage of newer language features and performance improvements.
 
 ## Architecture
 
@@ -96,6 +105,34 @@ npm run dev  # uses nodemon
 cd backend
 ./mvnw spring-boot:run
 ```
+
+## Testing
+
+### Frontend Tests
+
+**Test framework:** Jest with Supertest
+
+**Run tests:**
+```bash
+npm test
+```
+
+**Test files:**
+- `homepage.test.js` - Homepage integration tests
+
+**Current test coverage:**
+The homepage tests verify:
+- HTTP 200 status code
+- HTML content-type header
+- Page title contains "Anthropic"
+- Hero section title: "AI research and products that put safety at the frontier"
+- Navigation links (Research, News, Careers)
+- "Try Claude" button presence
+- "Latest Updates" section
+- Footer with "Anthropic PBC" copyright
+
+**Configuration:**
+Jest is configured in `package.json` with `testEnvironment: "node"`. Tests use `--no-webstorage` flag to avoid localStorage issues in Node environment.
 
 ## Article Fallback Pattern
 
