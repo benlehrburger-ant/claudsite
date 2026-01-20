@@ -10,10 +10,12 @@ This project is a comprehensive recreation of the Anthropic website, built with 
 
 ### Frontend (Node.js/Express)
 
-- **Server**: Express.js on port 3000
+- **Server**: Express.js with TypeScript on port 3000
+- **Language**: TypeScript (migrated from JavaScript)
 - **Template Engine**: EJS
 - **Database**: SQLite (better-sqlite3)
 - **Static Assets**: Organized in `public/` directory
+- **Build Output**: Compiled JavaScript in `dist/` directory
 
 ### Backend (Java/Spring Boot)
 
@@ -29,7 +31,7 @@ This project is a comprehensive recreation of the Anthropic website, built with 
 - **Article Service**: Dual-service architecture with automatic fallback
 - **Responsive Design**: Mobile-friendly interface
 - **Database Management**: SQLite for lightweight data persistence
-- **TypeScript Migration**: Ongoing frontend migration for improved type safety
+- **TypeScript**: Fully typed frontend with strict mode for enhanced type safety and developer experience
 
 ## Project Structure
 
@@ -41,11 +43,15 @@ This project is a comprehensive recreation of the Anthropic website, built with 
 │       ├── model/           # V1 article models
 │       ├── newmodel/        # V2 article models (enhanced)
 │       └── repository/      # Data access layer
-├── public/                  # Static assets (CSS, images, JS)
+├── dist/                    # Compiled TypeScript output
+├── public/                  # Static assets (CSS, images, client-side JS)
+├── types/                   # TypeScript type definitions
+│   └── index.ts            # Shared types (Post, Article, API models)
 ├── views/                   # EJS templates
-├── server.js               # Main Express server
+├── server.ts               # Main Express server (TypeScript)
+├── tsconfig.json           # TypeScript configuration
 ├── blog.db                 # SQLite database
-└── package.json            # Node.js dependencies
+└── package.json            # Node.js dependencies and scripts
 ```
 
 ## Database Schema
@@ -106,7 +112,13 @@ posts (
 # Install dependencies
 npm install
 
-# Run development server
+# Build TypeScript (compiles to dist/)
+npm run build
+
+# Run production server (uses compiled JavaScript)
+npm start
+
+# Run development server (uses ts-node with hot reload)
 npm run dev
 
 # Run tests
@@ -114,6 +126,14 @@ npm test
 ```
 
 The frontend will start on `http://localhost:3000`
+
+**TypeScript Development:**
+
+- Source files are in TypeScript (`.ts`)
+- Build output is generated in `dist/` directory with source maps
+- Development mode uses `ts-node` with `nodemon` for automatic recompilation
+- Test files remain in JavaScript but import from compiled output
+- Client-side JavaScript in `public/js/` remains as vanilla JS (no build step needed)
 
 ### Backend Setup (Optional)
 
@@ -145,7 +165,49 @@ npm test
 - Hero section content
 - Footer information
 
-Tests are configured to run in a Node environment with `--no-webstorage` flag.
+**Testing Notes:**
+
+- Tests are configured to run in a Node environment with `--no-webstorage` flag
+- Test files are currently in JavaScript (`.test.js`) for simplicity
+- Tests import from compiled TypeScript output in `dist/`
+- Future work: migrate test files to TypeScript
+
+## TypeScript Configuration
+
+The frontend is built with TypeScript for improved type safety and developer experience.
+
+**Key TypeScript Features:**
+
+- **Strict Mode**: Full type checking with `strict: true`
+- **Target**: ES2022 with downlevel compilation
+- **Module System**: CommonJS for Node.js compatibility
+- **Type Definitions**: Comprehensive types in `types/index.ts`:
+  - `Post` / `PostSummary` - Blog database models
+  - `Article` / `ArticleSection` - Rich article content with discriminated unions
+  - `CreatePostBody` / `UpdatePostBody` - API request body types
+  - Route parameter interfaces and EJS view data types
+- **Source Maps**: Enabled for debugging compiled code
+
+**Configuration File:** `tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "sourceMap": true
+  },
+  "include": ["server.ts", "types/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.js"]
+}
+```
 
 ## Article Fallback Pattern
 
@@ -174,11 +236,16 @@ The `newmodel` package provides advanced features:
 
 ## Ongoing Development
 
-### Active Projects
+### Completed Migrations
 
-- **TypeScript Migration**: Gradual migration of frontend JavaScript to TypeScript
-- **Java 21 Upgrade**: Backend upgrade to leverage modern Java features
-- **Enhanced Testing**: Expanding test coverage across components
+- **TypeScript Migration**: Frontend successfully migrated from JavaScript to TypeScript ✓
+- **Java 21 Upgrade**: Backend upgraded to Java 21 ✓
+
+### Future Enhancements
+
+- **Test Migration**: Migrate Jest test files from JavaScript to TypeScript
+- **Enhanced Testing**: Expand test coverage across components
+- **Type Coverage**: Add additional type definitions as needed
 
 ## Contributing
 
