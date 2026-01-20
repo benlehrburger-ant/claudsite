@@ -9,12 +9,14 @@ This project is a comprehensive recreation of the Anthropic website, built with 
 ## Architecture
 
 ### Frontend (Node.js/Express)
+
 - **Server**: Express.js on port 3000
 - **Template Engine**: EJS
 - **Database**: SQLite (better-sqlite3)
 - **Static Assets**: Organized in `public/` directory
 
 ### Backend (Java/Spring Boot)
+
 - **Framework**: Spring Boot 3.2.0
 - **Java Version**: Java 21 (upgraded from Java 17)
 - **Port**: 8080
@@ -49,6 +51,7 @@ This project is a comprehensive recreation of the Anthropic website, built with 
 ## Database Schema
 
 ### Posts Table
+
 ```sql
 posts (
   id INTEGER PRIMARY KEY,
@@ -68,17 +71,20 @@ posts (
 ## API Endpoints
 
 ### Public Routes
+
 - `GET /` - Homepage (displays 3 latest published posts)
 - `GET /blog` - Blog listing page
 - `GET /blog/:slug` - Individual blog post
 - `GET /articles/:id` - Article pages (Java backend with Node.js fallback)
 
 ### Admin Routes
+
 - `GET /admin` - Admin dashboard (all posts)
 - `GET /admin/posts/new` - Create new post
 - `GET /admin/posts/:id/edit` - Edit existing post
 
 ### REST API
+
 - `GET /api/posts` - List all posts
 - `POST /api/posts` - Create new post
 - `PUT /api/posts/:id` - Update post
@@ -89,6 +95,7 @@ posts (
 ## Installation
 
 ### Prerequisites
+
 - Node.js (v14 or higher)
 - Java 21 (for backend service)
 - Maven (for Java backend)
@@ -125,11 +132,13 @@ The backend will start on `http://localhost:8080`
 The project uses Jest with Supertest for integration testing.
 
 **Run tests:**
+
 ```bash
 npm test
 ```
 
 **Current test coverage includes:**
+
 - Homepage rendering and content verification
 - HTTP status codes and headers
 - Navigation elements
@@ -141,6 +150,7 @@ Tests are configured to run in a Node environment with `--no-webstorage` flag.
 ## Article Fallback Pattern
 
 The system implements a resilient fallback pattern:
+
 1. Attempts to fetch articles from Java backend (`http://localhost:8080/api/articles/:id`)
 2. Falls back to hardcoded article data in Node.js if backend is unavailable
 3. Ensures continuous service even during backend maintenance
@@ -148,10 +158,13 @@ The system implements a resilient fallback pattern:
 ## Java Backend Models
 
 ### V1 Article Model
+
 Basic article structure with essential fields.
 
 ### V2 Article Model (Enhanced)
+
 The `newmodel` package provides advanced features:
+
 - **ArticleV2**: Rich article record with versioning
 - **Author**: Author information and metadata
 - **Content**: Structured content management
@@ -162,6 +175,7 @@ The `newmodel` package provides advanced features:
 ## Ongoing Development
 
 ### Active Projects
+
 - **TypeScript Migration**: Gradual migration of frontend JavaScript to TypeScript
 - **Java 21 Upgrade**: Backend upgrade to leverage modern Java features
 - **Enhanced Testing**: Expanding test coverage across components
@@ -169,6 +183,7 @@ The `newmodel` package provides advanced features:
 ## Contributing
 
 This project is a collaboration between:
+
 - **benlehrburger-ant** - Human developer
 - **Claude** - AI pair programming assistant
 

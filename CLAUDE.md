@@ -10,9 +10,11 @@ A full-stack Anthropic website clone with a blog CMS and article service.
 ## Ongoing Projects
 
 ### JavaScript to TypeScript Migration
+
 The frontend codebase is being gradually migrated from JavaScript to TypeScript for improved type safety and developer experience.
 
 ### Java 21 Upgrade
+
 The backend is being upgraded from Java 17 to Java 21 to take advantage of newer language features and performance improvements.
 
 ## Architecture
@@ -36,17 +38,20 @@ The backend is being upgraded from Java 17 to Java 21 to take advantage of newer
 ## Key Routes
 
 ### Public Pages
+
 - `/` - Homepage (shows 3 latest published posts)
 - `/blog` - Blog listing
 - `/blog/:slug` - Single blog post
 - `/articles/:id` - Article pages (tries Java backend first, falls back to Node.js)
 
 ### Admin
+
 - `/admin` - Dashboard (lists all posts)
 - `/admin/posts/new` - Create post
 - `/admin/posts/:id/edit` - Edit post
 
 ### REST API
+
 - `GET /api/posts` - List all posts
 - `POST /api/posts` - Create post
 - `PUT /api/posts/:id` - Update post
@@ -57,6 +62,7 @@ The backend is being upgraded from Java 17 to Java 21 to take advantage of newer
 ## Database Schema
 
 ### Posts Table
+
 ```sql
 posts (
   id INTEGER PRIMARY KEY,
@@ -113,15 +119,18 @@ cd backend
 **Test framework:** Jest with Supertest
 
 **Run tests:**
+
 ```bash
 npm test
 ```
 
 **Test files:**
+
 - `homepage.test.js` - Homepage integration tests
 
 **Current test coverage:**
 The homepage tests verify:
+
 - HTTP 200 status code
 - HTML content-type header
 - Page title contains "Anthropic"

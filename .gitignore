@@ -61,3 +61,6 @@ codebase-info.html
 
 # Claude Code plans
 .claude/plans/
+
+# Claude Code local settings (may contain user-specific config)
+.claude/settings.local.json
