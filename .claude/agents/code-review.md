@@ -1,11 +1,16 @@
 ---
 name: code-review
-description: Review recent code changes against Anthropic's engineering best practices
+description: Review recent code changes against Anthropic's engineering best practices (runs as background agent)
+allowed-tools: Bash, Glob, Grep, Read, Task
 ---
 
 # Code Review Based on Anthropic Best Practices
 
-Review the recent code changes against Anthropic's engineering best practices.
+Run this as a background subagent to review code changes autonomously.
+
+## Instructions
+
+Use the Task tool with `subagent_type: "general-purpose"` and `run_in_background: true` to spawn an agent that performs the following review.
 
 ## Steps
 
