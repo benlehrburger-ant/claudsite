@@ -1,13 +1,23 @@
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-const Database = require("better-sqlite3");
+import express, { Request, Response } from "express";
+import path from "path";
+import bodyParser from "body-parser";
+import Database from "better-sqlite3";
+import type {
+  Post,
+  PostSummary,
+  Article,
+  CreatePostBody,
+  UpdatePostBody,
+  SlugParams,
+  PostParams,
+  ArticleParams,
+} from "./types";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Initialize SQLite database
-const db = new Database("blog.db");
+const db: Database.Database = new Database("blog.db");
 
 // Create blog posts table if it doesn't exist
 db.exec(`
@@ -27,7 +37,9 @@ db.exec(`
 `);
 
 // Seed some initial posts if table is empty
-const count = db.prepare("SELECT COUNT(*) as count FROM posts").get();
+const count = db.prepare("SELECT COUNT(*) as count FROM posts").get() as {
+  count: number;
+};
 if (count.count === 0) {
   const insertPost = db.prepare(`
     INSERT INTO posts (title, slug, excerpt, content, category, published)
@@ -82,7 +94,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 
 // Homepage
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   const posts = db
     .prepare(
       `
@@ -93,13 +105,13 @@ app.get("/", (req, res) => {
     LIMIT 3
   `,
     )
-    .all();
+    .all() as PostSummary[];
 
   res.render("index", { posts });
 });
 
 // Blog listing
-app.get("/blog", (req, res) => {
+app.get("/blog", (req: Request, res: Response) => {
   const posts = db
     .prepare(
       `
@@ -109,21 +121,21 @@ app.get("/blog", (req, res) => {
     ORDER BY created_at DESC
   `,
     )
-    .all();
+    .all() as PostSummary[];
 
   res.render("blog", { posts });
 });
 
 // Command reference page
-app.get("/command-reference", (req, res) => {
+app.get("/command-reference", (req: Request, res: Response) => {
   res.render("command-reference");
 });
 
 // Single blog post
-app.get("/blog/:slug", (req, res) => {
+app.get("/blog/:slug", (req: Request<SlugParams>, res: Response) => {
   const post = db
     .prepare("SELECT * FROM posts WHERE slug = ? AND published = 1")
-    .get(req.params.slug);
+    .get(req.params.slug) as Post | undefined;
 
   if (!post) {
     return res.status(404).render("404");
@@ -133,7 +145,7 @@ app.get("/blog/:slug", (req, res) => {
 });
 
 // Article data (served from Java backend, with Node.js fallback)
-const articles = {
+const articles: Record<string, Article> = {
   "claude-opus-4-5": {
     id: "claude-opus-4-5",
     title: "Claude Opus 4.5",
@@ -329,7 +341,7 @@ const articles = {
 };
 
 // Article pages - fetches content from Java backend with Node.js fallback
-app.get("/articles/:id", async (req, res) => {
+app.get("/articles/:id", async (req: Request<ArticleParams>, res: Response) => {
   const articleId = req.params.id;
 
   // Try Java backend first
@@ -338,7 +350,7 @@ app.get("/articles/:id", async (req, res) => {
       `http://localhost:8080/api/articles/${articleId}`,
     );
     if (response.ok) {
-      const article = await response.json();
+      const article = (await response.json()) as Article;
       return res.render("article", { article });
     }
   } catch (error) {
@@ -355,11 +367,11 @@ app.get("/articles/:id", async (req, res) => {
 });
 
 // API endpoint for articles (Node.js fallback)
-app.get("/api/articles", (req, res) => {
+app.get("/api/articles", (req: Request, res: Response) => {
   res.json(Object.values(articles));
 });
 
-app.get("/api/articles/:id", (req, res) => {
+app.get("/api/articles/:id", (req: Request<ArticleParams>, res: Response) => {
   const article = articles[req.params.id];
   if (!article) {
     return res.status(404).json({ error: "Article not found" });
@@ -368,23 +380,23 @@ app.get("/api/articles/:id", (req, res) => {
 });
 
 // Admin dashboard
-app.get("/admin", (req, res) => {
+app.get("/admin", (req: Request, res: Response) => {
   const posts = db
     .prepare("SELECT * FROM posts ORDER BY created_at DESC")
-    .all();
+    .all() as Post[];
   res.render("admin/dashboard", { posts });
 });
 
 // Create new post form
-app.get("/admin/posts/new", (req, res) => {
+app.get("/admin/posts/new", (req: Request, res: Response) => {
   res.render("admin/editor", { post: null });
 });
 
 // Edit post form
-app.get("/admin/posts/:id/edit", (req, res) => {
+app.get("/admin/posts/:id/edit", (req: Request<PostParams>, res: Response) => {
   const post = db
     .prepare("SELECT * FROM posts WHERE id = ?")
-    .get(req.params.id);
+    .get(req.params.id) as Post | undefined;
 
   if (!post) {
     return res.status(404).render("404");
@@ -396,79 +408,91 @@ app.get("/admin/posts/:id/edit", (req, res) => {
 // API Routes
 
 // Create post
-app.post("/api/posts", (req, res) => {
-  const { title, slug, excerpt, content, category, published } = req.body;
+app.post(
+  "/api/posts",
+  (req: Request<object, object, CreatePostBody>, res: Response) => {
+    const { title, slug, excerpt, content, category, published } = req.body;
 
-  try {
-    const result = db
-      .prepare(
-        `
+    try {
+      const result = db
+        .prepare(
+          `
       INSERT INTO posts (title, slug, excerpt, content, category, published)
       VALUES (?, ?, ?, ?, ?, ?)
     `,
-      )
-      .run(
-        title,
-        slug,
-        excerpt,
-        content,
-        category || "News",
-        published ? 1 : 0,
-      );
+        )
+        .run(
+          title,
+          slug,
+          excerpt,
+          content,
+          category || "News",
+          published ? 1 : 0,
+        );
 
-    res.json({ success: true, id: result.lastInsertRowid });
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
-});
+      res.json({ success: true, id: result.lastInsertRowid });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      res.status(400).json({ success: false, error: errorMessage });
+    }
+  },
+);
 
 // Update post
-app.put("/api/posts/:id", (req, res) => {
-  const { title, slug, excerpt, content, category, published } = req.body;
+app.put(
+  "/api/posts/:id",
+  (req: Request<PostParams, object, UpdatePostBody>, res: Response) => {
+    const { title, slug, excerpt, content, category, published } = req.body;
 
-  try {
-    db.prepare(
-      `
+    try {
+      db.prepare(
+        `
       UPDATE posts
       SET title = ?, slug = ?, excerpt = ?, content = ?, category = ?, published = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
     `,
-    ).run(
-      title,
-      slug,
-      excerpt,
-      content,
-      category,
-      published ? 1 : 0,
-      req.params.id,
-    );
+      ).run(
+        title,
+        slug,
+        excerpt,
+        content,
+        category,
+        published ? 1 : 0,
+        req.params.id,
+      );
 
-    res.json({ success: true });
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
-});
+      res.json({ success: true });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      res.status(400).json({ success: false, error: errorMessage });
+    }
+  },
+);
 
 // Delete post
-app.delete("/api/posts/:id", (req, res) => {
+app.delete("/api/posts/:id", (req: Request<PostParams>, res: Response) => {
   try {
     db.prepare("DELETE FROM posts WHERE id = ?").run(req.params.id);
     res.json({ success: true });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    res.status(400).json({ success: false, error: errorMessage });
   }
 });
 
 // Get all posts (API)
-app.get("/api/posts", (req, res) => {
+app.get("/api/posts", (req: Request, res: Response) => {
   const posts = db
     .prepare("SELECT * FROM posts ORDER BY created_at DESC")
-    .all();
+    .all() as Post[];
   res.json(posts);
 });
 
 // 404 handler
-app.use((req, res) => {
+app.use((req: Request, res: Response) => {
   res.status(404).render("404");
 });
 
@@ -479,4 +503,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { app, db };
+export { app, db };
