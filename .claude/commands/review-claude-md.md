@@ -1,3 +1,8 @@
+---
+name: review-claude-md
+description: Update CLAUDE.md to reflect recent codebase changes
+---
+
 # Update CLAUDE.md Based on Recent Changes
 
 Review recent git changes and update the root CLAUDE.md file to reflect the current state of the codebase.

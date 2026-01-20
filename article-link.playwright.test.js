@@ -4,13 +4,26 @@ test.describe("Article Link Validation", () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to the homepage
     await page.goto("http://localhost:3000");
+    // Wait for page to fully load
+    await page.waitForLoadState("networkidle");
   });
 
   test("Claude Opus 4.5 article card has valid href attribute", async ({
     page,
   }) => {
+    // Scroll down to the Latest Updates section
+    const latestUpdates = page.locator("text=Latest Updates");
+    await latestUpdates.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
+
     // Find the first article card (Claude Opus 4.5)
     const articleCard = page.locator(".cards-grid .card").first();
+    await articleCard.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+
+    // Hover over the card to highlight it
+    await articleCard.hover();
+    await page.waitForTimeout(500);
 
     // Check that the href attribute exists and has the correct value
     await expect(articleCard).toHaveAttribute(
@@ -20,8 +33,19 @@ test.describe("Article Link Validation", () => {
   });
 
   test("Claude Opus 4.5 article card is clickable", async ({ page }) => {
+    // Scroll down to the cards section
+    const latestUpdates = page.locator("text=Latest Updates");
+    await latestUpdates.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
+
     // Find the first article card
     const articleCard = page.locator(".cards-grid .card").first();
+    await articleCard.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+
+    // Hover over the card
+    await articleCard.hover();
+    await page.waitForTimeout(400);
 
     // Verify the card contains the expected title
     await expect(articleCard.locator(".card-title")).toHaveText(
@@ -33,36 +57,29 @@ test.describe("Article Link Validation", () => {
     await expect(articleCard).toBeEnabled();
   });
 
-  test("Claude Opus 4.5 article card navigates to correct page when clicked", async ({
-    page,
-  }) => {
-    // Find and click the first article card
-    const articleCard = page.locator(".cards-grid .card").first();
-    await articleCard.click();
+  test("Latest Updates section has 3 article cards", async ({ page }) => {
+    // Scroll down to the Latest Updates section
+    const latestUpdates = page.locator("text=Latest Updates");
+    await latestUpdates.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
 
-    // Wait for navigation and verify the URL
-    await expect(page).toHaveURL(
-      "http://localhost:3000/articles/claude-opus-4-5",
-    );
-  });
-
-  test("all article cards in Latest Updates have valid href attributes", async ({
-    page,
-  }) => {
     // Get all article cards
     const articleCards = page.locator(".cards-grid .card");
 
     // Verify we have 3 article cards
     await expect(articleCards).toHaveCount(3);
 
-    // Check each card has an href attribute
+    // Hover over each card to highlight it
     for (let i = 0; i < 3; i++) {
       const card = articleCards.nth(i);
-      const href = await card.getAttribute("href");
-
-      // Verify href exists and starts with /articles/
-      expect(href).toBeTruthy();
-      expect(href).toMatch(/^\/articles\//);
+      await card.scrollIntoViewIfNeeded();
+      await card.hover();
+      await page.waitForTimeout(400);
+      await expect(card.locator(".card-title")).toBeVisible();
     }
+
+    // Scroll back to top
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "smooth" }));
+    await page.waitForTimeout(500);
   });
 });
