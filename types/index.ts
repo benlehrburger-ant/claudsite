@@ -20,6 +20,7 @@ export interface PostPreview {
   slug: string;
   excerpt: string | null;
   category: string;
+  author: string;
   created_at: string;
 }
 
