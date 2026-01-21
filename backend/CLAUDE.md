@@ -124,8 +124,6 @@ The `package-info.java` documents the migration strategy:
 4. Convert category/tags to `Taxonomy` objects
 5. Wrap hero image in `ArticleMedia`
 
-**Note**: The newmodel package has incorrect package declaration (`com.anthropic.articleservice.model.newmodel` instead of `com.anthropic.articleservice.newmodel`). This needs fixing before use.
-
 ## Frontend Integration
 
 The Node.js frontend at `http://localhost:3000` consumes this API:
@@ -155,7 +153,7 @@ Output JAR: `target/article-service-1.0.0.jar`
 
 ## Java Version
 
-Currently using **Java 17** (specified in `pom.xml`). An ongoing project is upgrading to Java 21.
+Currently using **Java 21** (specified in `pom.xml`).
 
 ## Known Limitations
 
@@ -163,4 +161,3 @@ Currently using **Java 17** (specified in `pom.xml`). An ongoing project is upgr
 2. **No validation**: Input validation not implemented on endpoints
 3. **No tests**: Test directory exists but no test files
 4. **V2 not integrated**: The newmodel package is complete but not exposed via API
-5. **Package mismatch**: V2 models have incorrect package declarations
