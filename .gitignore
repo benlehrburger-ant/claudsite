@@ -32,6 +32,7 @@ Thumbs.db
 # Build output
 dist/
 build/
+*.tsbuildinfo
 
 # Java / Maven
 backend/target/
