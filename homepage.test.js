@@ -1,5 +1,5 @@
 const request = require("supertest");
-const { app, db } = require("./server");
+const { app, db } = require("./dist/server");
 
 describe("Homepage", () => {
   // Test 1: Homepage returns 200 status
