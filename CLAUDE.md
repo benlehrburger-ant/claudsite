@@ -13,9 +13,9 @@ A full-stack Anthropic website clone with a blog CMS and article service.
 
 The frontend codebase is being gradually migrated from JavaScript to TypeScript for improved type safety and developer experience.
 
-### Java 21 Upgrade
+### Java 21 Upgrade (Complete)
 
-The backend is being upgraded from Java 17 to Java 21 to take advantage of newer language features and performance improvements.
+The backend has been upgraded from Java 17 to Java 21, with Spring Boot 3.4.1. Key changes include sealed interfaces with pattern matching for Article sections, record patterns, unnamed variables, and SequencedCollection usage.
 
 ## Architecture
 
@@ -31,7 +31,7 @@ The backend is being upgraded from Java 17 to Java 21 to take advantage of newer
 
 **Location:** `backend/`
 
-- Spring Boot 3.2.0 with Java 17
+- Spring Boot 3.4.1 with Java 21
 - Article service API on port 8080
 - Package: `com.anthropic.articleservice`
 

@@ -1,6 +1,6 @@
 # Backend Directory
 
-Spring Boot 3.2.0 article service providing REST APIs for the Anthropic website clone. Runs on port 8080.
+Spring Boot 3.4.1 article service (Java 21) providing REST APIs for the Anthropic website clone. Runs on port 8080.
 
 ## Quick Start
 
@@ -39,7 +39,7 @@ src/main/java/com/anthropic/articleservice/
 
 ## Article Model (V1) - Currently Active
 
-Uses Java records with nested `Section` type. Articles are identified by string ID (e.g., `claude-opus-4-5`).
+Uses Java records with a sealed `Section` interface (Java 21). Articles are identified by string ID (e.g., `claude-opus-4-5`).
 
 ### Article Fields
 
@@ -61,7 +61,7 @@ Static factory methods for creating sections:
 - `Section.code(language, snippet)` → code block
 - `Section.quote(content)` → blockquote
 
-**Key nuance**: The `Section` record has 9 fields, but most are null—use the static factory methods rather than the constructor directly to avoid errors.
+**Key nuance**: `Section` is a sealed interface with typed record variants (`Paragraph`, `SectionHeading`, `ItemList`, `Image`, `Code`, `Quote`). Use the static factory methods (`Section.paragraph(...)`, etc.) to create sections. Jackson `@JsonTypeInfo`/`@JsonSubTypes` annotations preserve the `"type"` discriminator for frontend compatibility.
 
 ## ArticleRepository
 
@@ -84,7 +84,7 @@ A comprehensive next-gen model with significant improvements. Located in `newmod
 ### Key V2 Features
 
 1. **Sealed Content Interface** (`Content.java`)
-   - Uses Java 17 sealed types for exhaustive pattern matching
+   - Uses Java 21 sealed types with record patterns and exhaustive pattern matching
    - 12 content block types: `RichText`, `Heading`, `ContentList`, `Media`, `CodeBlock`, `Quote`, `Callout`, `Table`, `Accordion`, `Divider`, `Embed`, `Columns`, `FootnoteRef`
    - Inline formatting support with character ranges
 
@@ -124,7 +124,7 @@ The `package-info.java` documents the migration strategy:
 4. Convert category/tags to `Taxonomy` objects
 5. Wrap hero image in `ArticleMedia`
 
-**Note**: The newmodel package has incorrect package declaration (`com.anthropic.articleservice.model.newmodel` instead of `com.anthropic.articleservice.newmodel`). This needs fixing before use.
+Package declarations have been corrected to `com.anthropic.articleservice.newmodel`.
 
 ## Frontend Integration
 
@@ -155,7 +155,7 @@ Output JAR: `target/article-service-1.0.0.jar`
 
 ## Java Version
 
-Currently using **Java 17** (specified in `pom.xml`). An ongoing project is upgrading to Java 21.
+Using **Java 21** with Spring Boot 3.4.1 (specified in `pom.xml`).
 
 ## Known Limitations
 
@@ -163,4 +163,4 @@ Currently using **Java 17** (specified in `pom.xml`). An ongoing project is upgr
 2. **No validation**: Input validation not implemented on endpoints
 3. **No tests**: Test directory exists but no test files
 4. **V2 not integrated**: The newmodel package is complete but not exposed via API
-5. **Package mismatch**: V2 models have incorrect package declarations
+5. ~~Package mismatch~~: Fixed — V2 models now have correct package declarations

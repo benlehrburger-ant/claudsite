@@ -1,13 +1,50 @@
-package com.anthropic.articleservice.model.newmodel;
+package com.anthropic.articleservice.newmodel;
 
 import java.util.List;
 import java.util.Map;
 
 /**
  * Sealed interface representing all content block types.
- * Uses sealed types for exhaustive pattern matching in switch expressions.
+ * Uses Java 21 sealed types with record patterns and exhaustive
+ * pattern matching in switch expressions.
  */
 public sealed interface Content {
+
+    /**
+     * Extracts plain text from any content block using Java 21 record patterns
+     * and exhaustive pattern matching in switch expressions (JEP 440, JEP 441).
+     */
+    default String plainText() {
+        return switch (this) {
+            case RichText rt -> rt.text();
+            case Heading h -> h.text();
+            case ContentList cl ->
+                String.join("\n", cl.items().stream().map(item ->
+                    item.content().stream()
+                        .map(Content::plainText)
+                        .collect(java.util.stream.Collectors.joining())
+                ).toList());
+            case Media m -> m.alt() != null ? m.alt() : "";
+            case CodeBlock cb -> cb.code();
+            case Quote q ->
+                q.content().stream().map(Content::plainText)
+                    .collect(java.util.stream.Collectors.joining());
+            case Callout c ->
+                c.content().stream().map(Content::plainText)
+                    .collect(java.util.stream.Collectors.joining());
+            case Table t -> "";
+            case Accordion a -> a.summary();
+            case Divider d -> "";
+            case Embed e -> "";
+            case Columns cols ->
+                cols.columns().stream().flatMap(col -> col.content().stream())
+                    .map(Content::plainText)
+                    .collect(java.util.stream.Collectors.joining(" "));
+            case FootnoteRef fn ->
+                fn.content().stream().map(Content::plainText)
+                    .collect(java.util.stream.Collectors.joining());
+        };
+    }
 
     /**
      * Rich text with inline formatting support.

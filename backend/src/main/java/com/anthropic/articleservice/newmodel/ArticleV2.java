@@ -1,4 +1,4 @@
-package com.anthropic.articleservice.model.newmodel;
+package com.anthropic.articleservice.newmodel;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -9,6 +9,7 @@ import java.util.Optional;
 /**
  * Next-generation article model with comprehensive metadata,
  * versioning, localization, and SEO support.
+ * Leverages Java 21 features including SequencedCollection and record patterns.
  */
 public record ArticleV2(
     // Identity
@@ -130,7 +131,7 @@ public record ArticleV2(
             return new PublishingInfo(Status.DRAFT, Visibility.PRIVATE, false, false, null, null);
         }
 
-        public static PublishingInfo featured() {
+        public static PublishingInfo featuredPublished() {
             return new PublishingInfo(Status.PUBLISHED, Visibility.PUBLIC, true, false, null, null);
         }
     }
@@ -198,8 +199,11 @@ public record ArticleV2(
         return publishing.featured();
     }
 
+    /**
+     * Returns the primary (first) author using Java 21 SequencedCollection.getFirst().
+     */
     public Optional<Author> primaryAuthor() {
-        return authors.isEmpty() ? Optional.empty() : Optional.of(authors.get(0));
+        return authors.isEmpty() ? Optional.empty() : Optional.of(authors.getFirst());
     }
 
     public static class Builder {

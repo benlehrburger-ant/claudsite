@@ -4,8 +4,9 @@
  * <h2>Key Improvements over V1</h2>
  *
  * <h3>1. Sealed Content Types</h3>
- * <p>Uses Java 17 sealed interfaces for exhaustive pattern matching.
- * The compiler ensures all content types are handled in switch expressions.</p>
+ * <p>Uses Java 21 sealed interfaces with pattern matching in switch expressions.
+ * The compiler ensures all content types are handled exhaustively, and unnamed
+ * variable patterns ({@code _}) enable concise matching.</p>
  *
  * <h3>2. Rich Content Blocks</h3>
  * <ul>
@@ -94,4 +95,4 @@
  * @see Taxonomy
  * @see ArticleMedia
  */
-package com.anthropic.articleservice.model.newmodel;
+package com.anthropic.articleservice.newmodel;

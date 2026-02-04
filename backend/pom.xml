@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version>
+        <version>3.4.1</version>
         <relativePath/>
     </parent>
 
@@ -15,10 +15,10 @@
     <artifactId>article-service</artifactId>
     <version>1.0.0</version>
     <name>Article Service</name>
-    <description>Java 17 backend for serving Anthropic articles</description>
+    <description>Java 21 backend for serving Anthropic articles</description>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
     </properties>
 
     <dependencies>
