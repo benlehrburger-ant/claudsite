@@ -1,4 +1,4 @@
-package com.anthropic.articleservice.model.newmodel;
+package com.anthropic.articleservice.newmodel;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -130,7 +130,7 @@ public record ArticleV2(
             return new PublishingInfo(Status.DRAFT, Visibility.PRIVATE, false, false, null, null);
         }
 
-        public static PublishingInfo featured() {
+        public static PublishingInfo asFeatured() {
             return new PublishingInfo(Status.PUBLISHED, Visibility.PUBLIC, true, false, null, null);
         }
     }

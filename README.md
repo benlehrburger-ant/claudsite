@@ -163,21 +163,27 @@ Basic article structure with essential fields.
 
 ### V2 Article Model (Enhanced)
 
-The `newmodel` package provides advanced features:
+The `newmodel` package (`com.anthropic.articleservice.newmodel`) provides advanced features:
 
-- **ArticleV2**: Rich article record with versioning
+- **ArticleV2**: Rich article record with versioning and featured article support
 - **Author**: Author information and metadata
 - **Content**: Structured content management
 - **Taxonomy**: Categorization and tagging
 - **ArticleMedia**: Media asset handling
 - **Additional features**: Localization, SEO metadata, engagement tracking, series organization
 
+**Note**: The V2 models now use the correct package structure (`com.anthropic.articleservice.newmodel`) and are ready for API integration.
+
 ## Ongoing Development
+
+### Recent Updates
+
+- **Java 21 Upgrade (Completed)**: Backend successfully upgraded from Java 17 to Java 21, enabling use of modern Java features
+- **V2 Model Package Structure (Fixed)**: Corrected package declarations from `com.anthropic.articleservice.model.newmodel` to `com.anthropic.articleservice.newmodel`
 
 ### Active Projects
 
 - **TypeScript Migration**: Gradual migration of frontend JavaScript to TypeScript
-- **Java 21 Upgrade**: Backend upgrade to leverage modern Java features
 - **Enhanced Testing**: Expanding test coverage across components
 
 ## Contributing

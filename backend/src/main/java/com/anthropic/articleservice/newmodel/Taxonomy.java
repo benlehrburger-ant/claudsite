@@ -1,4 +1,4 @@
-package com.anthropic.articleservice.model.newmodel;
+package com.anthropic.articleservice.newmodel;
 
 import java.util.List;
 
