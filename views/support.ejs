@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get support for Claude - Anthropic's AI assistant">
+  <title>Anthropic \ How to Get Support</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+  <style>
+    .support-hero {
+      padding: calc(var(--header-height) + var(--spacing-3xl)) 0 var(--spacing-xl);
+      background: var(--background-cream);
+    }
+
+    .support-hero-content {
+      max-width: 700px;
+    }
+
+    .support-hero-content h1 {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .support-hero-content p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .support-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+    }
+
+    .support-section {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .support-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: var(--spacing-md);
+      color: var(--primary-dark);
+    }
+
+    .support-section p {
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.0625rem;
+      line-height: 1.8;
+    }
+
+    .support-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing-lg);
+    }
+
+    .support-card {
+      background: var(--background-white);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: var(--spacing-xl);
+      transition: all var(--transition-base);
+    }
+
+    .support-card:hover {
+      border-color: var(--accent-orange);
+    }
+
+    .support-card-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--background-light);
+      border-radius: 12px;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .support-card-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--accent-orange);
+    }
+
+    .support-card h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--spacing-xs);
+      color: var(--primary-dark);
+    }
+
+    .support-card p {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .support-steps {
+      margin-top: var(--spacing-md);
+    }
+
+    .support-step {
+      display: flex;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md) 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .support-step:last-child {
+      border-bottom: none;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-orange);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .step-content h4 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      color: var(--primary-dark);
+    }
+
+    .step-content p {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .support-note {
+      background: var(--background-light);
+      border-radius: 12px;
+      padding: var(--spacing-lg);
+      margin-top: var(--spacing-lg);
+    }
+
+    .support-note p {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .support-note strong {
+      color: var(--primary-dark);
+    }
+
+    .faq-list {
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: var(--spacing-lg);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: var(--spacing-lg);
+      font-size: 1.0625rem;
+      font-weight: 400;
+      color: var(--primary-dark);
+      background: var(--background-white);
+      cursor: pointer;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .faq-question:hover {
+      background: var(--background-light);
+    }
+
+    .faq-question svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: #5ba3d9;
+      margin-left: var(--spacing-lg);
+      transition: transform var(--transition-base);
+    }
+
+    .faq-item.open .faq-question svg {
+      transform: rotate(90deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-base);
+    }
+
+    .faq-answer-inner {
+      padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      background: var(--background-white);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/images/logo_long.png" alt="Anthropic" style="height: 20px; width: auto;">
+      </a>
+
+      <nav class="nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              Research
+              <svg viewBox="0 0 12 12" fill="none">
+                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <div class="dropdown">
+              <a href="#" class="dropdown-link">Core Views on AI Safety</a>
+              <a href="#" class="dropdown-link">Research Papers</a>
+              <a href="#" class="dropdown-link">Anthropic Academy</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              Commitments
+              <svg viewBox="0 0 12 12" fill="none">
+                <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <div class="dropdown">
+              <a href="#" class="dropdown-link">Responsible Scaling Policy</a>
+              <a href="#" class="dropdown-link">Security & Compliance</a>
+              <a href="#" class="dropdown-link">Transparency</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Learn</a>
+          </li>
+          <li class="nav-item">
+            <a href="/blog" class="nav-link">News</a>
+          </li>
+          <li class="nav-item">
+            <a href="/support" class="nav-link">Support</a>
+          </li>
+        </ul>
+
+        <a href="#" class="btn btn-primary">Try Claude</a>
+
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Support Hero -->
+  <section class="support-hero">
+    <div class="container">
+      <div class="support-hero-content">
+        <h1>How to Get Support</h1>
+        <p>Find help with Claude, your account, billing, and more. Support options vary depending on your plan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support Content -->
+  <div class="support-content">
+
+    <!-- Support Channels -->
+    <section class="support-section">
+      <h2>Support by Plan</h2>
+      <div class="support-cards">
+        <div class="support-card">
+          <div class="support-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3>Free Plan</h3>
+          <p>Access help documentation and the Fin AI support bot. Account deletion and data export requests are also available.</p>
+        </div>
+
+        <div class="support-card">
+          <div class="support-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <h3>Pro, Max & Team</h3>
+          <p>All help documentation, Fin AI support bot, and further assistance from our Product Support team.</p>
+        </div>
+
+        <div class="support-card">
+          <div class="support-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <h3>Enterprise</h3>
+          <p>Enterprise owners can submit requests through a dedicated support form for priority assistance.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to Get Help -->
+    <section class="support-section">
+      <h2>How to Reach Support</h2>
+      <p>If you're on a paid plan, you can reach our Product Support team through any of the following methods:</p>
+
+      <div class="support-steps">
+        <div class="support-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>From your Claude account</h4>
+            <p>Open the account menu and select "Get help" to start a conversation with our support team.</p>
+          </div>
+        </div>
+        <div class="support-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>From the Console or API</h4>
+            <p>Log in at platform.claude.com and select "Get help" from the menu.</p>
+          </div>
+        </div>
+        <div class="support-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>From the Help Center</h4>
+            <p>Click the help icon in the lower right corner when logged in to chat with our Fin AI support bot.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="support-note">
+        <p><strong>Note:</strong> Phone and live chat support are not currently available. All support is handled through the methods listed above.</p>
+      </div>
+    </section>
+
+    <!-- Related Articles / FAQs -->
+    <section class="support-section">
+      <h2>Related Articles</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How do I use the Workbench?
+            <svg viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">The Workbench is an interactive playground for testing prompts and experimenting with Claude's capabilities. You can access it from the Console at console.anthropic.com. It allows you to adjust model parameters, test different system prompts, and compare outputs across models.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Important considerations before enabling single sign-on (SSO) and JIT/SCIM provisioning
+            <svg viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Before enabling SSO, ensure your identity provider is properly configured and that all existing team members have matching email domains. Enabling SSO may change how users authenticate, and JIT provisioning will automatically create accounts for new users from your identity provider. Review your team roster and communicate the change to all members before proceeding.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            I'm getting an API connection error. How can I fix it?
+            <svg viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">API connection errors are commonly caused by incorrect API keys, network issues, or rate limiting. Verify your API key is valid and has not expired, check that your network allows outbound HTTPS connections to api.anthropic.com, and ensure you are not exceeding your rate limits. You can check the API status page for any ongoing incidents.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Claude Code usage analytics
+            <svg viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Claude Code usage analytics provide insights into how your team uses Claude Code, including token consumption, session frequency, and active users. Admins can access these analytics from the organization settings in the Console to monitor adoption and manage costs.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How to get support for Claude for Government
+            <svg viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Claude for Government customers receive dedicated support through their assigned account team. For urgent issues, contact your account representative directly. For general inquiries, submit a request through the government support portal provided during onboarding.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h4>Products</h4>
+          <ul class="footer-links">
+            <li><a href="#">Claude</a></li>
+            <li><a href="#">Claude for Enterprise</a></li>
+            <li><a href="#">API</a></li>
+            <li><a href="#">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Developers</h4>
+          <ul class="footer-links">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">API Reference</a></li>
+            <li><a href="#">Examples</a></li>
+            <li><a href="#">Status</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Research</a></li>
+            <li><a href="/support">Support</a></li>
+            <li><a href="/blog">News</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Acceptable Use</a></li>
+            <li><a href="#">Security</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-legal">&copy; 2024 Anthropic PBC. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(function(el) {
+        el.classList.remove('open');
+        el.querySelector('.faq-answer').style.maxHeight = null;
+      });
+
+      // Open clicked if it was closed
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    }
+  </script>
+</body>
+</html>

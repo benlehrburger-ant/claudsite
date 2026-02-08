@@ -1,5 +1,5 @@
 ---
-name: run-playwright
+name: playwright-tests
 description: Run Playwright E2E tests with Firefox in slow-mo mode for visual debugging
 ---
 
