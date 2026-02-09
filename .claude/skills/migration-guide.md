@@ -1,5 +1,5 @@
 ---
-name: migrate-to-typescript
+name: migration-guide
 description: Best practices for codebase migrations of any kind
 ---
 

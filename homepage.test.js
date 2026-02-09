@@ -33,7 +33,7 @@ describe("Homepage", () => {
     const response = await request(app).get("/");
     expect(response.text).toContain("Research");
     expect(response.text).toContain("News");
-    expect(response.text).toContain("Careers");
+    expect(response.text).toContain("Support");
   });
 
   // Test 6: Homepage contains the "Try Claude" button

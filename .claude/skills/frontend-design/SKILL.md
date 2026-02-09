@@ -43,3 +43,15 @@ Interpret creatively and make unexpected choices that feel genuinely designed fo
 **IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
 
 Remember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
+
+## Anthropic Brand Resources
+
+When building Anthropic-branded pages for this project, reference the bundled brand guidelines:
+
+- **`references/anthropic-brand.md`** — Full color palette (hex values for all families: Magenta, Blue, Green, Aqua, Violet, Orange, Red, Yellow, Gray, accents), typography specs (Anthropic Sans/Mono, fallback stacks, optical sizing rules), illustration principles, and logo types.
+- **`scripts/generate_brand_css.py`** — Generates CSS custom properties, SCSS variables, or Tailwind config from the brand color palette. Run with `--scss` or `--tailwind` flags for alternate formats.
+- **`assets/logos/`** — Official SVG logos from brand.anthropic.com:
+  - `anthropic/` — Anthropic wordmark and symbol (Slate + Ivory variants)
+  - `claude/` — Claude wordmark (Slate, Ivory, One-color), Spark, and icon (Rounded + Square)
+  - `claude-code/` — Claude Code logo (Slate, Ivory, One-color)
+  - `claude-models/` — Sonnet, Opus, Haiku logos (Slate + One-color variants)

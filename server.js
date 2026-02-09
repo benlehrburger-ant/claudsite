@@ -119,6 +119,11 @@ app.get("/command-reference", (req, res) => {
   res.render("command-reference");
 });
 
+// Support page
+app.get("/support", (req, res) => {
+  res.render("support");
+});
+
 // Single blog post
 app.get("/blog/:slug", (req, res) => {
   const post = db
