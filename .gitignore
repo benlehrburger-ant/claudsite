@@ -56,9 +56,6 @@ test-results/
 # Generated documentation
 codebase-info.html
 
-# MCP configuration (may contain sensitive data)
-.mcp.json
-
 # Claude Code plans
 .claude/plans/
 

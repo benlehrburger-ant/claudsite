@@ -2,6 +2,7 @@
 name: dead-code
 description: Find unused code, routes, templates, and CSS across the codebase (runs as background agent)
 allowed-tools: Glob, Grep, Read, Task
+model: opus
 ---
 
 # Dead Code Analysis

@@ -2,6 +2,7 @@
 name: code-review
 description: Review recent code changes against Anthropic's engineering best practices (runs as background agent)
 allowed-tools: Bash, Glob, Grep, Read, Task
+model: opus
 ---
 
 # Code Review Based on Anthropic Best Practices

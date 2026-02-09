@@ -2,6 +2,7 @@
 name: security-scan
 description: Scan the codebase for security vulnerabilities and provide remediation advice (runs as background agent)
 allowed-tools: Bash, Glob, Grep, Read, Task
+model: opus
 ---
 
 # Security Vulnerability Scan
