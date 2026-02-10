@@ -4,8 +4,10 @@
  * <h2>Key Improvements over V1</h2>
  *
  * <h3>1. Sealed Content Types</h3>
- * <p>Uses Java 17 sealed interfaces for exhaustive pattern matching.
- * The compiler ensures all content types are handled in switch expressions.</p>
+ * <p>Uses Java 21 sealed interfaces for exhaustive pattern matching.
+ * The compiler ensures all content types are handled in switch expressions.
+ * Java 21 finalizes pattern matching for switch (JEP 441) and record
+ * patterns (JEP 440), enabling concise and type-safe content handling.</p>
  *
  * <h3>2. Rich Content Blocks</h3>
  * <ul>

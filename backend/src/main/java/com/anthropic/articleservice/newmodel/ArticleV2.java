@@ -130,7 +130,7 @@ public record ArticleV2(
             return new PublishingInfo(Status.DRAFT, Visibility.PRIVATE, false, false, null, null);
         }
 
-        public static PublishingInfo featured() {
+        public static PublishingInfo featuredPost() {
             return new PublishingInfo(Status.PUBLISHED, Visibility.PUBLIC, true, false, null, null);
         }
     }
@@ -199,7 +199,7 @@ public record ArticleV2(
     }
 
     public Optional<Author> primaryAuthor() {
-        return authors.isEmpty() ? Optional.empty() : Optional.of(authors.get(0));
+        return authors.isEmpty() ? Optional.empty() : Optional.of(authors.getFirst());
     }
 
     public static class Builder {
