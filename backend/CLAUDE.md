@@ -39,7 +39,7 @@ src/main/java/com/anthropic/articleservice/
 
 ## Article Model (V1) - Currently Active
 
-Uses Java records with nested `Section` type. Articles are identified by string ID (e.g., `claude-opus-4-5`).
+Uses Java records with nested `Section` type. Articles are identified by string ID (e.g., `claude-opus-4-6`).
 
 ### Article Fields
 
@@ -71,7 +71,7 @@ Static factory methods for creating sections:
 
 | ID                          | Title                        | Category    |
 | --------------------------- | ---------------------------- | ----------- |
-| `claude-opus-4-5`           | Claude Opus 4.5              | Product     |
+| `claude-opus-4-6`           | Claude Opus 4.6              | Product     |
 | `economic-index`            | The Anthropic Economic Index | Research    |
 | `building-effective-agents` | Building Effective Agents    | Engineering |
 

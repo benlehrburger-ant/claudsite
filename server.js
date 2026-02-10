@@ -35,11 +35,11 @@ if (count.count === 0) {
   `);
 
   insertPost.run(
-    "Introducing Claude Opus 4.5",
-    "introducing-claude-opus-4-5",
+    "Introducing Claude Opus 4.6",
+    "introducing-claude-opus-4-6",
     "Our most capable model yet, combining enhanced reasoning with improved safety.",
-    `<p>Today we're announcing Claude Opus 4.5, our most capable model to date. This release represents a significant advancement in AI capabilities while maintaining our commitment to safety.</p>
-    <p>Opus 4.5 demonstrates improved performance across a wide range of benchmarks, including complex reasoning tasks, coding challenges, and creative writing.</p>
+    `<p>Today we're announcing Claude Opus 4.6, our most capable model to date. This release represents a significant advancement in AI capabilities while maintaining our commitment to safety.</p>
+    <p>Opus 4.6 demonstrates improved performance across a wide range of benchmarks, including complex reasoning tasks, coding challenges, and creative writing.</p>
     <h2>Key Improvements</h2>
     <ul>
       <li>Enhanced reasoning capabilities</li>
@@ -139,9 +139,9 @@ app.get("/blog/:slug", (req, res) => {
 
 // Article data (served from Java backend, with Node.js fallback)
 const articles = {
-  "claude-opus-4-5": {
-    id: "claude-opus-4-5",
-    title: "Claude Opus 4.5",
+  "claude-opus-4-6": {
+    id: "claude-opus-4-6",
+    title: "Claude Opus 4.6",
     subtitle:
       "Intelligent, efficient, and the best model in the world for coding, agents, and computer use",
     date: "November 24, 2025",
@@ -151,20 +151,20 @@ const articles = {
     author: "Anthropic",
     authorRole: "Product Team",
     heroImage: "/images/opus-page.png",
-    heroImageAlt: "Claude Opus 4.5 announcement graphic",
+    heroImageAlt: "Claude Opus 4.6 announcement graphic",
     readingTimeMinutes: 8,
     tags: ["AI", "Claude", "Product Launch", "Machine Learning"],
     sections: [
       {
         type: "paragraph",
         content:
-          'Anthropic has launched Claude Opus 4.5, described as "intelligent, efficient, and the best model in the world for coding, agents, and computer use." The model achieves state-of-the-art performance on software engineering benchmarks and demonstrates significant improvements across multiple domains.',
+          'Anthropic has launched Claude Opus 4.6, described as "intelligent, efficient, and the best model in the world for coding, agents, and computer use." The model achieves state-of-the-art performance on software engineering benchmarks and demonstrates significant improvements across multiple domains.',
       },
       { type: "heading", heading: "Key Performance Metrics" },
       {
         type: "list",
         items: [
-          "SWE-bench Verified: Opus 4.5 leads on real-world software engineering tasks",
+          "SWE-bench Verified: Opus 4.6 leads on real-world software engineering tasks",
           "Coding Capability: Excels across 7 of 8 programming languages on SWE-bench Multilingual",
           "Token Efficiency: At medium effort, matches Sonnet 4.5 performance while using 76% fewer output tokens",
           "Long-horizon Tasks: 29% improvement over Sonnet 4.5 on Vending-Bench for sustained reasoning",
@@ -185,13 +185,13 @@ const articles = {
       {
         type: "quote",
         content:
-          "Opus 4.5 figures out the fix when pointed at complex, multi-system bugs.",
+          "Opus 4.6 figures out the fix when pointed at complex, multi-system bugs.",
       },
       { type: "heading", heading: "Safety Improvements" },
       {
         type: "paragraph",
         content:
-          "Opus 4.5 demonstrates enhanced robustness against prompt injection attacks compared to competing frontier models, positioning it as more resistant to adversarial manipulation.",
+          "Opus 4.6 demonstrates enhanced robustness against prompt injection attacks compared to competing frontier models, positioning it as more resistant to adversarial manipulation.",
       },
     ],
   },
@@ -200,7 +200,7 @@ const articles = {
     title: "The Anthropic Economic Index",
     subtitle:
       "Understanding AI's effects on the economy through real-world usage data",
-    date: "September 15, 2025",
+    date: "January 15, 2026",
     category: "Research",
     excerpt:
       "Understanding AI's effects on the economy by analyzing how people use Claude across US states and occupations.",
@@ -267,7 +267,7 @@ const articles = {
     id: "building-effective-agents",
     title: "Building Effective Agents",
     subtitle: "Lessons learned from building LLM agents with dozens of teams",
-    date: "December 19, 2024",
+    date: "December 19, 2025",
     category: "Engineering",
     excerpt:
       "The most successful implementations use simple patterns rather than complex frameworks or specialized libraries.",
@@ -332,6 +332,11 @@ const articles = {
     ],
   },
 };
+
+// Broken route for demo - returns 500 error
+app.get("/articles/opus-4-5", (req, res) => {
+  res.status(500).render("500");
+});
 
 // Article pages - fetches content from Java backend with Node.js fallback
 app.get("/articles/:id", async (req, res) => {
