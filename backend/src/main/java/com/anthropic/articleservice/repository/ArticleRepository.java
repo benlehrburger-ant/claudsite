@@ -67,7 +67,7 @@ public class ArticleRepository {
             "economic-index",
             "The Anthropic Economic Index",
             "Revealing the shape of AI adoption across the world",
-            "September 15, 2025",
+            "January 15, 2026",
             "Research",
             "Explore the data behind our research to understand how people are using Claude across every US state and hundreds of occupations.",
             "Anthropic Research",

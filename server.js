@@ -30,45 +30,116 @@ db.exec(`
 const count = db.prepare("SELECT COUNT(*) as count FROM posts").get();
 if (count.count === 0) {
   const insertPost = db.prepare(`
-    INSERT INTO posts (title, slug, excerpt, content, category, published)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO posts (title, slug, excerpt, content, category, published, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `);
 
   insertPost.run(
     "Introducing Claude Opus 4.6",
     "introducing-claude-opus-4-6",
-    "Our most capable model yet, combining enhanced reasoning with improved safety.",
-    `<p>Today we're announcing Claude Opus 4.6, our most capable model to date. This release represents a significant advancement in AI capabilities while maintaining our commitment to safety.</p>
-    <p>Opus 4.6 demonstrates improved performance across a wide range of benchmarks, including complex reasoning tasks, coding challenges, and creative writing.</p>
-    <h2>Key Improvements</h2>
-    <ul>
-      <li>Enhanced reasoning capabilities</li>
-      <li>Better context understanding</li>
-      <li>Improved safety measures</li>
-      <li>Faster response times</li>
-    </ul>`,
-    "Research",
-    1,
-  );
-
-  insertPost.run(
-    "Our Approach to AI Safety",
-    "our-approach-to-ai-safety",
-    "How we build AI systems that are helpful, harmless, and honest.",
-    `<p>At Anthropic, safety is not an afterthought—it's the foundation of everything we build. Our approach to AI safety is guided by three core principles: being helpful, harmless, and honest.</p>
-    <p>We believe that the development of powerful AI systems requires careful consideration of potential risks and proactive measures to mitigate them.</p>`,
-    "Safety",
-    1,
-  );
-
-  insertPost.run(
-    "Claude for Enterprise",
-    "claude-for-enterprise",
-    "Bringing Claude to teams with enhanced security and collaboration features.",
-    `<p>We're excited to introduce Claude for Enterprise, designed specifically for organizations that need powerful AI capabilities with enterprise-grade security.</p>
-    <p>Enterprise customers get access to advanced features including SSO integration, audit logs, and dedicated support.</p>`,
+    "Our newest model excels at coding and computer use while improving everyday tasks like research and spreadsheet work.",
+    `<p>Today we're releasing Claude Opus 4.6—intelligent, efficient, and the best model in the world for coding, agents, and computer use.</p>
+    <h2>State-of-the-Art Software Engineering</h2>
+    <p>Opus 4.6 achieves state-of-the-art results on SWE-bench Verified, outperforming all competing frontier models on real-world software engineering tasks.</p>
+    <h2>Efficiency Without Compromise</h2>
+    <p>At medium effort levels, Opus 4.6 matches Sonnet 4.5's performance while using 76% fewer output tokens.</p>`,
     "Product",
     1,
+    "2026-02-05",
+  );
+
+  insertPost.run(
+    "The Anthropic Economic Index",
+    "anthropic-economic-index",
+    "Understanding AI's effects on the economy by analyzing how people use Claude across US states and occupations.",
+    `<p>The Anthropic Economic Index is a comprehensive tool for understanding AI's effects on the economy.</p>
+    <h2>Understanding AI Adoption Patterns</h2>
+    <p>Our index tracks regional AI adoption patterns by US state and occupational usage trends across hundreds of job categories.</p>`,
+    "Research",
+    1,
+    "2026-01-15",
+  );
+
+  insertPost.run(
+    "Building Effective Agents",
+    "building-effective-agents",
+    "The most successful implementations use simple patterns rather than complex frameworks or specialized libraries.",
+    `<p>Over the past year, we've worked with dozens of teams building large language model (LLM) agents across industries.</p>
+    <h2>What Are Agentic Systems?</h2>
+    <p>Workflows are systems where LLMs and tools are orchestrated through predefined code paths. Agents are systems where LLMs dynamically direct their own processes and tool usage.</p>`,
+    "Engineering",
+    1,
+    "2025-12-19",
+  );
+
+  insertPost.run(
+    "Building a C compiler with a team of parallel Claudes",
+    "building-c-compiler-parallel-claudes",
+    "Teams of parallel Claude instances built a C compiler with minimal oversight, revealing insights about autonomous software development capabilities.",
+    `<p>We explored what happens when you give teams of parallel Claude instances a complex software engineering task: building a C compiler from scratch.</p>
+    <h2>Autonomous Development</h2>
+    <p>The experiment revealed fascinating insights about how AI agents can collaborate on complex codebases with minimal human intervention.</p>
+    <h2>Key Findings</h2>
+    <p>Parallel execution dramatically reduced development time while maintaining code quality through automated review processes.</p>`,
+    "Engineering",
+    1,
+    "2026-02-05",
+  );
+
+  insertPost.run(
+    "Designing AI-resistant technical evaluations",
+    "designing-ai-resistant-evaluations",
+    "What we've learned from multiple iterations of a performance engineering assessment that Claude keeps surpassing.",
+    `<p>As AI capabilities advance, creating evaluations that meaningfully test those capabilities becomes increasingly challenging.</p>
+    <h2>The Moving Target</h2>
+    <p>Each iteration of our performance engineering assessment has been surpassed by newer Claude models, forcing us to continuously raise the bar.</p>
+    <h2>Lessons Learned</h2>
+    <p>We share strategies for designing evaluations that remain meaningful as AI capabilities improve.</p>`,
+    "Engineering",
+    1,
+    "2026-01-21",
+  );
+
+  insertPost.run(
+    "Demystifying evals for AI agents",
+    "demystifying-evals-ai-agents",
+    "The capabilities that make agents useful also make them difficult to evaluate. Strategies that work combine techniques to match system complexity.",
+    `<p>Evaluating AI agents presents unique challenges compared to evaluating traditional AI systems.</p>
+    <h2>Why Agent Evals Are Hard</h2>
+    <p>The very capabilities that make agents useful—autonomy, tool use, multi-step reasoning—also make them difficult to evaluate reliably.</p>
+    <h2>Combined Approaches</h2>
+    <p>Effective evaluation strategies combine multiple techniques to match the complexity of the systems they measure.</p>`,
+    "Engineering",
+    1,
+    "2026-01-09",
+  );
+
+  insertPost.run(
+    "Effective harnesses for long-running agents",
+    "effective-harnesses-long-running-agents",
+    "Addressing challenges agents face across multiple context windows, drawing inspiration from human engineering practices.",
+    `<p>Long-running AI agents face unique challenges when operating across multiple context windows.</p>
+    <h2>Context Management</h2>
+    <p>We explore techniques for maintaining agent coherence and effectiveness over extended interactions.</p>
+    <h2>Human-Inspired Design</h2>
+    <p>Drawing from human engineering practices, we developed harness patterns that improve agent reliability and performance.</p>`,
+    "Engineering",
+    1,
+    "2025-11-26",
+  );
+
+  insertPost.run(
+    "Quantifying infrastructure noise in agentic coding evals",
+    "quantifying-infrastructure-noise-evals",
+    "Infrastructure configuration can swing agentic coding benchmarks by several percentage points—sometimes more than the leaderboard gap between top models.",
+    `<p>When evaluating AI coding agents, infrastructure choices matter more than most realize.</p>
+    <h2>The Hidden Variable</h2>
+    <p>Our research found that infrastructure configuration can swing benchmark results by several percentage points—often exceeding the gap between top models on leaderboards.</p>
+    <h2>Standardization Matters</h2>
+    <p>We propose guidelines for controlling infrastructure variables to enable more meaningful comparisons between AI coding systems.</p>`,
+    "Engineering",
+    1,
+    "2026-02-03",
   );
 }
 
