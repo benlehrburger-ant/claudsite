@@ -1,67 +1,112 @@
-# Anthropic Website Clone
+# CLAUDE.md
 
-A full-stack Anthropic website clone with a blog CMS and article service.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Collaborators
+## Project Overview
 
-- **benlehrburger-ant** - Human collaborator
-- **Claude** - AI pair programming assistant
+Full-stack Anthropic website clone with Node.js/Express frontend and optional Java/Spring Boot backend. Features a blog CMS with SQLite database, article service with fallback architecture, and an AI support agent using Claude Agent SDK.
 
-## Ongoing Projects
+## Development Commands
 
-### JavaScript to TypeScript Migration
+### Frontend (Primary)
 
-The frontend codebase is being gradually migrated from JavaScript to TypeScript for improved type safety and developer experience.
+```bash
+npm install                    # Install dependencies
+npm run dev                    # Start dev server with nodemon (port 3000)
+npm start                      # Start production server
+npm test                       # Run Jest integration tests
+npm test:playwright            # Run Playwright E2E tests
+npm run agent                  # Start support agent (port 3001)
+```
 
-### Java 21 Upgrade
+### Backend (Optional)
 
-The backend is being upgraded from Java 17 to Java 21 to take advantage of newer language features and performance improvements.
+```bash
+cd backend
+./mvnw spring-boot:run         # Start Java backend (port 8080)
+./mvnw clean package           # Build JAR
+```
+
+### Run Everything
+
+```bash
+npm run dev:all                # Concurrent frontend + backend
+```
 
 ## Architecture
 
-### Frontend (Node.js/Express)
+### Dual-Service Design
 
-**Entry point:** `server.js` (port 3000)
+The application uses a **resilient fallback pattern**:
 
-- **Template engine:** EJS (`views/`)
-- **Static assets:** `public/` (css, images, js)
-- **Database:** SQLite via better-sqlite3 (`blog.db`)
+1. **Primary**: Node.js frontend attempts to fetch articles from Java backend (`http://localhost:8080/api/articles/:id`)
+2. **Fallback**: If Java backend is unavailable, Node.js serves hardcoded article data from `server.js`
+3. **Result**: Site functions fully even when backend is down
 
-### Backend (Java/Spring Boot)
+This pattern is implemented in server.js:181-227 and server.js:412-436.
 
-**Location:** `backend/`
+### Frontend Stack (Node.js/Express)
 
-- Spring Boot 3.2.0 with Java 17
-- Article service API on port 8080
-- Package: `com.anthropic.articleservice`
+- **Entry point**: `server.js` (port 3000)
+- **Template engine**: EJS in `views/`
+- **Database**: SQLite (`blog.db`) using better-sqlite3 (in-memory, created at startup)
+- **Static assets**: `public/` (CSS, images, JS)
+- **Support agent**: `agent/support-agent.mjs` using Claude Agent SDK
 
-## Key Routes
+### Backend Stack (Java/Spring Boot)
+
+- **Entry point**: `backend/src/main/java/com/anthropic/articleservice/ArticleServiceApplication.java`
+- **Port**: 8080
+- **Framework**: Spring Boot 3.2.0
+- **Java version**: Java 17 (ongoing upgrade to Java 21)
+- **Storage**: In-memory HashMap (no database)
+- **Package**: `com.anthropic.articleservice`
+
+### Support Agent
+
+The `agent/support-agent.mjs` provides an AI-powered chatbot that:
+
+- Searches the SQLite blog database for site content
+- Uses WebSearch/WebFetch for Anthropic documentation
+- Runs on port 3001 with Express
+- Uses Claude Agent SDK with allowed tools: Bash, Read, Grep, WebSearch, WebFetch
+
+## Key Routes & Endpoints
 
 ### Public Pages
 
 - `/` - Homepage (shows 3 latest published posts)
-- `/blog` - Blog listing
-- `/blog/:slug` - Single blog post
-- `/articles/:id` - Article pages (tries Java backend first, falls back to Node.js)
+- `/blog` - Blog listing page
+- `/blog/:slug` - Individual blog post
+- `/articles/:id` - Article pages (Java backend with Node fallback)
+- `/support` - Support chat interface
+- `/articles/opus-4-5` - Intentionally broken route (returns 500 for demo)
 
-### Admin
+### Admin Pages
 
-- `/admin` - Dashboard (lists all posts)
-- `/admin/posts/new` - Create post
+- `/admin` - Dashboard (all posts)
+- `/admin/posts/new` - Create new post
 - `/admin/posts/:id/edit` - Edit post
 
-### REST API
+### REST API (Node.js)
 
 - `GET /api/posts` - List all posts
 - `POST /api/posts` - Create post
 - `PUT /api/posts/:id` - Update post
 - `DELETE /api/posts/:id` - Delete post
-- `GET /api/articles` - List articles (Node fallback)
-- `GET /api/articles/:id` - Get article (Node fallback)
+- `GET /api/articles` - List articles (fallback)
+- `GET /api/articles/:id` - Get article (fallback)
+
+### REST API (Java Backend)
+
+- `GET /api/articles` - List all articles
+- `GET /api/articles/:id` - Get article by ID
+
+CORS is enabled on Java backend for all origins.
 
 ## Database Schema
 
-### Posts Table
+### Posts Table (SQLite)
 
 ```sql
 posts (
@@ -79,70 +124,77 @@ posts (
 )
 ```
 
-## Java Backend Structure
+The database is initialized and seeded in `server.js` lines 13-144 if empty.
 
-```
-backend/src/main/java/com/anthropic/articleservice/
-├── ArticleServiceApplication.java  # Main entry
-├── controller/
-│   └── ArticleController.java      # REST endpoints
-├── model/
-│   └── Article.java                # V1 article model
-├── newmodel/                       # V2 article system
-│   ├── ArticleV2.java              # Rich article record
-│   ├── Author.java
-│   ├── Content.java
-│   ├── Taxonomy.java
-│   └── ArticleMedia.java
-└── repository/
-    └── ArticleRepository.java
-```
+## Java Backend Architecture
 
-The `ArticleV2` model supports versioning, localization, SEO metadata, engagement tracking, and series organization.
+### Article Models
 
-## Running
+**V1 (Active)**: Located in `backend/src/main/java/com/anthropic/articleservice/model/Article.java`
 
-```bash
-# Node.js frontend
-npm install
-npm run dev  # uses nodemon
+- Uses Java records with nested `Section` record
+- Article IDs are strings (e.g., "claude-opus-4-6")
+- Section types: paragraph, heading, list, image, code, quote
+- Use static factory methods (e.g., `Section.paragraph(content)`) rather than constructor
 
-# Java backend (optional)
-cd backend
-./mvnw spring-boot:run
-```
+**V2 (Not Integrated)**: Located in `backend/src/main/java/com/anthropic/articleservice/newmodel/`
+
+- Advanced features: versioning, localization, SEO metadata, engagement tracking
+- Sealed content interface with 12 content block types
+- Rich authorship with multiple contributors
+- Publishing workflow states (DRAFT, REVIEW, SCHEDULED, PUBLISHED, ARCHIVED)
+- **Note**: Has package declaration mismatch that needs fixing before use
+
+### Repository Pattern
+
+`ArticleRepository.java` stores articles in-memory using `HashMap<String, Article>`. To add articles, modify `initializeArticles()` method.
+
+Current articles: `claude-opus-4-6`, `economic-index`, `building-effective-agents`
 
 ## Testing
 
-### Frontend Tests
+### Jest (Integration Tests)
 
-**Test framework:** Jest with Supertest
+- **Config**: In `package.json` with `testEnvironment: "node"`
+- **Run**: `npm test` (uses `--no-webstorage` flag)
+- **Files**: `homepage.test.js`
+- Tests verify: status codes, content-type, page elements, navigation, footer
 
-**Run tests:**
+### Playwright (E2E Tests)
 
-```bash
-npm test
-```
+- **Config**: `playwright.config.js`
+- **Run**: `npm run test:playwright`
+- **Files**: `**/*.playwright.test.js` (e.g., `article-link.playwright.test.js`)
+- **Settings**: Headless: false, slowMo: 500, auto-start server on port 3000
 
-**Test files:**
+## Ongoing Migrations
 
-- `homepage.test.js` - Homepage integration tests
+1. **TypeScript Migration**: Frontend codebase gradually migrating from JavaScript to TypeScript
+   - Type definitions already added: `@types/express`, `@types/node`, etc.
+   - Migration in progress, not complete
 
-**Current test coverage:**
-The homepage tests verify:
+2. **Java 21 Upgrade**: Backend upgrading from Java 17 to Java 21
+   - Currently on Java 17 (pom.xml line 21)
+   - Target: Java 21 for modern language features
 
-- HTTP 200 status code
-- HTML content-type header
-- Page title contains "Anthropic"
-- Hero section title: "AI research and products that put safety at the frontier"
-- Navigation links (Research, News, Careers)
-- "Try Claude" button presence
-- "Latest Updates" section
-- Footer with "Anthropic PBC" copyright
+## Important Implementation Notes
 
-**Configuration:**
-Jest is configured in `package.json` with `testEnvironment: "node"`. Tests use `--no-webstorage` flag to avoid localStorage issues in Node environment.
+### Java Backend Limitations
 
-## Article Fallback Pattern
+- **No persistence**: In-memory storage only (data lost on restart)
+- **No validation**: Input validation not implemented
+- **No tests**: Test directory exists but empty
+- **V2 models**: Complete but not wired to controller
 
-The Node.js server attempts to fetch articles from the Java backend at `http://localhost:8080/api/articles/:id`. If unavailable, it falls back to hardcoded article data in `server.js`.
+### Hardcoded Article Data
+
+Articles in `server.js` (lines 212-405) serve as fallback data. This data structure must match the Java Article model for seamless fallback.
+
+### Server Exports
+
+`server.js` exports both `app` and `db` for testing (line 563). Server only starts if run directly (`require.main === module`).
+
+## Project Collaborators
+
+- **benlehrburger-ant** - Human developer
+- **Claude** - AI pair programming assistant

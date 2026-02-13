@@ -42,10 +42,10 @@ describe("Homepage", () => {
     expect(response.text).toContain("Try Claude");
   });
 
-  // Test 7: Homepage contains the Latest Updates section
-  test("contains Latest Updates section", async () => {
+  // Test 7: Homepage contains the Latest News section
+  test("contains Latest News section", async () => {
     const response = await request(app).get("/");
-    expect(response.text).toContain("Latest Updates");
+    expect(response.text).toContain("Latest News");
   });
 
   // Test 8: Homepage contains footer with copyright

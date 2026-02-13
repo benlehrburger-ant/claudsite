@@ -169,8 +169,8 @@ app.get("/", (req, res) => {
   res.render("index", { posts });
 });
 
-// Blog listing
-app.get("/blog", (req, res) => {
+// News page
+app.get("/news", (req, res) => {
   const posts = db
     .prepare(
       `
@@ -182,7 +182,7 @@ app.get("/blog", (req, res) => {
     )
     .all();
 
-  res.render("blog", { posts });
+  res.render("news", { posts });
 });
 
 // Command reference page
@@ -196,7 +196,7 @@ app.get("/support", (req, res) => {
 });
 
 // Single blog post
-app.get("/blog/:slug", (req, res) => {
+app.get("/news/:slug", (req, res) => {
   const post = db
     .prepare("SELECT * FROM posts WHERE slug = ? AND published = 1")
     .get(req.params.slug);
